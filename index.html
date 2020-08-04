@@ -3,14 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY-PIN</title>
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="generate-input" class="form-control" type="text">
+                    <button id="generate-btn" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="input-sec" class="input-section half-width">
+                    <input id="cal-input" class="form-control" type="text">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div onclick="getInput(7)" id="btn7"  class="button">7</div>
+                              <div onclick="getInput(8)" id="btn8" class="button">8</div>
+                              <div onclick="getInput(9)" id="btn9" class="button">9</div>
+                            </div>
+                            
+                            <div class="calc-button-row">
+                              <div onclick="getInput(4)" id="btn4" class="button">4</div>
+                              <div onclick="getInput(5)" id="btn5" class="button">5</div>
+                              <div onclick="getInput(6)" id="btn6" class="button">6</div>
+                            </div>
+
+                            <div class="calc-button-row">
+                              <div onclick="getInput(1)" id="btn1" class="button">1</div>
+                              <div onclick="getInput(2)" id="btn2" class="button">2</div>
+                              <div onclick="getInput(3)" id="btn3" class="button">3</div>
+                            </div>
+
+                            <div class="calc-button-row">
+                                <div onclick= "backspace('cal-input')"id="btnTurn" class="button"> > </div>
+                                <div onclick="getInput(0)" id="btn-0" class="button"> 0 </div>
+                                <div id="clean-btn" onclick="getInput('C')"  class="button"> C </div>
+                            </div>
+
+                            <div>
+                                <button id="submit-btn" type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Notify section started -->
+    
+    <div class="container">
+        <div class="row">
+            <div class="notify-section">
+                <p id="not-matching" class="notify">❌ Pin Didn't Match, Please try again</p>
+                <p id="matching" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+
+// generate input randomly changed option 
+
+  document.getElementById("generate-btn").addEventListener("click", function(){
+        var input =   document.getElementById("generate-input");
+        var inputNum = parseInt(Math.random(input)*9999);
+        var calInput = document.getElementById("cal-input");
+        var calInputNum = parseInt(calInput.value);
+
+   
+        if(inputNum >= 1000 && inputNum <= 9999 ){
+            document.getElementById("generate-input").value = inputNum;
+        };
+  
+    });
+
     
 
-    <script>
+    
+    // calculator option start 
+
+
+    document.getElementById("submit-btn").addEventListener("click", function(){
+        var pinInput =   document.getElementById("generate-input");
+        var pinInputNum = parseInt(pinInput.value);
         
-    </script>
+        var calInput = document.getElementById("cal-input");
+        var calInputNum = parseInt(calInput.value);
+
+        // matching option 
+
+        if(calInputNum == pinInputNum){
+            
+          document.getElementById("matching").style.display="block";
+          document.getElementById("not-matching").style.display ="none";
+            
+        }else{
+            document.getElementById("not-matching").style.display = "block";
+            document.getElementById("matching").style.display="none";
+        };
+        
+    });
+
+   
+//  get the calculator button value to the calculator screen
+
+   function getInput(i){
+       var x = i;
+       var calInput = document.getElementById("cal-input").value;
+       document.getElementById("cal-input").value += i;
+    
+
+        if(x == "C"){
+            document.getElementById("cal-input").value = "";
+        };
+
+
+    };
+
+    // backspace button function 
+
+    function backspace(id){
+                var calInput =document. getElementById(id).value;
+                if(calInput){
+                    document.getElementById(id).value = calInput.substring(0,calInput.length-1);
+                }
+            };
+
+   
+
+
+
+</script>
+
 </body>
 </html>
